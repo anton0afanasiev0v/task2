@@ -1,0 +1,39 @@
+version: "3.6"
+services:
+
+
+  backend:
+    restart: always
+    container_name: backend
+    build: .
+    ports:
+      - "80:8080"
+
+  postgres13:
+    restart: always
+    container_name: postgres
+    image: postgres:13
+    ports:
+      - "5433:5432"
+    networks:
+      - default
+    environment:
+      POSTGRES_DB: "postgres"
+      POSTGRES_PASSWORD: "WLgxqy4gy94HrJB6LSma"
+      POSTGRES_USER: "admin"
+      PGDATA: "/var/lib/postgresql/data/pgdata"
+    volumes:
+      - ./data/pgdata:/var/lib/postgresql/data/pgdata
+
+  pgadmin:
+    restart: always
+    image: dpage/pgadmin4:6.4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: pgadmin@email.com
+      PGADMIN_DEFAULT_PASSWORD: 9tkgWIxz3nknyoIlBQYL
+    ports:
+      - "28080:80"
+
+networks:
+  default:
+    name: network
